@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_book"
+        android:icon="@drawable/ic_book"
+        android:orderInCategory="0"
+        android:title="图书" />
+
+    <item
+        android:id="@+id/navigation_video"
+        android:icon="@drawable/ic_video"
+        android:orderInCategory="1"
+        android:title="图书检索" />
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_music"-->
+<!--        android:icon="@drawable/ic_music"-->
+<!--        android:orderInCategory="2"-->
+<!--        android:title="我的" />-->
+
+</menu>
