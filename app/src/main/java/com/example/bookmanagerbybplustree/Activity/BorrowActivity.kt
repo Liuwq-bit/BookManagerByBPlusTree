@@ -1,10 +1,12 @@
 package com.example.bookmanagerbybplustree.Activity
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.bookmanagerbybplustree.R
 import android.view.MenuItem
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookmanagerbybplustree.Adapter.BorrowAdapter
 import com.example.bookmanagerbybplustree.BookManager.Companion.borrowBpt
@@ -19,6 +21,7 @@ class BorrowActivity : AppCompatActivity() {
     private lateinit var adapter: BorrowAdapter
     private lateinit var borrowList: MutableList<Borrow>
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +35,11 @@ class BorrowActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         borrowRecyclerView.layoutManager = layoutManager
 
-        borrowList = borrowBpt.findByUserName(user)
+        if (user != "admin")
+            borrowList = borrowBpt.findByUserName(user)
+        else
+            borrowList = borrowBpt.findAll()
+
         adapter = BorrowAdapter(this, borrowList)
         borrowRecyclerView.adapter = adapter
 

@@ -43,7 +43,7 @@ class SearchFragment : Fragment() {
             if (content.isNotEmpty()) {
                 var temp = bookBpt.findListByBookName(content)
 //                adapter.bookList = bookBpt.findListByBookName(content)
-                if (temp.size > 0 && temp[0].bookName == content) {
+                if (temp.size > 0) {
                     adapter.bookList = temp
                     adapter.notifyDataSetChanged()
                     searchRecyclerView.visibility = View.VISIBLE
@@ -51,7 +51,7 @@ class SearchFragment : Fragment() {
                 } else {
                     searchRecyclerView.visibility = View.GONE
                     bgImageView.visibility = View.VISIBLE
-                    Toast.makeText(context, "未能查询到相关书目", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "未能查询到相关书目", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 searchRecyclerView.visibility = View.GONE

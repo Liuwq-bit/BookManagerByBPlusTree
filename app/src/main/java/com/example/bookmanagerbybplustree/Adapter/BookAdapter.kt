@@ -28,8 +28,6 @@ import java.util.*
 class BookAdapter(private val fragment: Fragment, private val list: MutableList<Book>) :
     RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
-//    val viewModel by lazy { ViewModelProviders.of(fragment).get(BookViewModel::class.java) }
-
     var bookList = list
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -97,50 +95,10 @@ class BookAdapter(private val fragment: Fragment, private val list: MutableList<
 
         if (user != "admin")
             holder.deleteBtn.isVisible = false
+        else
+            holder.borrowBtn.isVisible = false
 
         Glide.with(context).load(book.url).into(holder.bookImage)   // 加载图片
-//        holder.bookImage.setImageResource(Glide.with(context).load(book.url).into(holder.bookImage))
-
-        // 设置标记按钮监听事件
-//        holder.bookTypeBtn0.setOnClickListener {
-////            val position = holder.adapterPosition
-//            val book = bookList[position]
-//            val date = Date()
-//            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//            viewModel.insertBookMark(BookMark(userId, book.book_id ?: 0, 0, dateFormat.format(date)))
-//            if (holder.bookTypeBtn0.text == "已想读")
-//                holder.bookTypeBtn0.text = "想读"
-//            else
-//                holder.bookTypeBtn0.text = "已想读"
-//            holder.bookTypeBtn1.text = "在读"
-//            holder.bookTypeBtn2.text = "读过"
-//        }
-//        holder.bookTypeBtn1.setOnClickListener {
-////            val position = holder.adapterPosition
-//            val book = bookList[position]
-//            val date = Date()
-//            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//            viewModel.insertBookMark(BookMark(userId, book.book_id ?: 0, 1, dateFormat.format(date)))
-//            holder.bookTypeBtn0.text = "想读"
-//            if (holder.bookTypeBtn1.text == "已在读")
-//                holder.bookTypeBtn1.text = "在读"
-//            else
-//                holder.bookTypeBtn1.text = "已在读"
-//            holder.bookTypeBtn2.text = "读过"
-//        }
-//        holder.bookTypeBtn2.setOnClickListener {
-////            val position = holder.adapterPosition
-//            val book = bookList[position]
-//            val date = Date()
-//            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//            viewModel.insertBookMark(BookMark(userId, book.book_id ?: 0, 2, dateFormat.format(date)))
-//            holder.bookTypeBtn0.text = "想读"
-//            holder.bookTypeBtn1.text = "在读"
-//            if (holder.bookTypeBtn2.text == "已读过")
-//                holder.bookTypeBtn2.text = "读过"
-//            else
-//                holder.bookTypeBtn2.text = "已读过"
-//        }
 
         holder.borrowBtn.setOnClickListener {
 
@@ -150,8 +108,12 @@ class BookAdapter(private val fragment: Fragment, private val list: MutableList<
             } else {
 
                 if (bookBpt.borrowByBookName(bookList[position].bookName)) {
-                    bookList[position].available -= 1
+                    var temp = bookList[position]
+                    temp.available -= 1
+                    bookList[position] = temp
+//                    bookList[position].available -= 1
                     notifyDataSetChanged()
+                    bookBpt.insert(temp)
                 } else {
                     Toast.makeText(context, "本书库存为空", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener

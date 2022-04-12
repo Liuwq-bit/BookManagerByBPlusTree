@@ -1,5 +1,7 @@
 package com.example.bookmanagerbybplustree
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.text.isDigitsOnly
 
 data class Book(
@@ -85,7 +87,8 @@ class BookBPlusTree {
      */
     fun findListByBookName(bookName: String): MutableList<Book> {
         val bookList = showAll().filter {
-            it.bookName == bookName
+//            it.bookName == bookName
+            it.bookName.contains(bookName)
         }
         return bookList.toMutableList()
     }
@@ -145,6 +148,16 @@ class BorrowBPlusTree {
 
         return borrowList.toTypedArray().toMutableList()
     }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun findAll(): MutableList<Borrow> {
+        var borrowList = showAll()
+        borrowList.removeIf {
+            it.bookName == ""
+        }
+        return borrowList
+    }
+
 
     /**
      * 向B+树中插入借阅信息
